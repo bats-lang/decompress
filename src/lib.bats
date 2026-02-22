@@ -17,7 +17,7 @@
 #pub fun blob_read
   {l:agz}{n:pos}
   (handle: int, blob_offset: int,
-   out: !$A.arr(byte, l, n), len: int n): $R.result(int)
+   out: !$A.arr(byte, l, n), len: int n): $R.result(int, int)
 
 #pub fun blob_free
   (handle: int): void
