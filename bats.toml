@@ -1,3 +1,9 @@
 [package]
 name = "wasm.bats-packages.dev/decompress"
 kind = "lib"
+
+[dependencies]
+"array" = ""
+"promise" = ""
+"result" = ""
+"wasm.bats-packages.dev/bridge" = ""
