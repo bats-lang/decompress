@@ -7,6 +7,8 @@
 #use wasm.bats-packages.dev/bridge as B
 #use result as R
 
+staload BD = "wasm.bats-packages.dev/bridge/src/decompress.sats"
+
 #pub fun decompress
   {lb:agz}{n:pos}
   (data: !$A.borrow(byte, lb, n), data_len: int n, method: int)
@@ -25,12 +27,12 @@
 implement decompress{lb}{n}(data, data_len, method) = let
   val @(p, r) = $P.create<int>()
   val id = $P.stash(r)
-  val () = $B.decompress_req(data, data_len, method, id)
+  val () = $BD.decompress_req(data, data_len, method, id)
 in p end
 
-implement get_len() = $B.decompress_len()
+implement get_len() = $BD.decompress_len()
 
 implement blob_read{l}{n}(handle, blob_offset, out, len) =
-  $B.blob_read(handle, blob_offset, out, len)
+  $BD.blob_read(handle, blob_offset, out, len)
 
-implement blob_free(handle) = $B.blob_free(handle)
+implement blob_free(handle) = $BD.blob_free(handle)
