@@ -14,7 +14,7 @@ staload BD = "wasm.bats-packages.dev/bridge/src/decompress.sats"
   (data: !$A.borrow(byte, lb, n), data_len: int n, method: int)
   : $P.promise(int, $P.Pending)
 
-#pub fun get_len(): [n:int] int n
+#pub fun get_len(): int
 
 #pub fun blob_read
   {l:agz}{n:pos}
