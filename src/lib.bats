@@ -12,7 +12,7 @@ staload BD = "wasm.bats-packages.dev/bridge/src/decompress.sats"
 #pub fun decompress
   {lb:agz}{n:pos}
   (data: !$A.borrow(byte, lb, n), data_len: int n, method: int)
-  : $P.promise(int, $P.Pending)
+  : $P.promise(Int, $P.Pending)
 
 #pub fun get_len(): [v:int] int v
 
@@ -25,7 +25,7 @@ staload BD = "wasm.bats-packages.dev/bridge/src/decompress.sats"
   (handle: int): void
 
 implement decompress{lb}{n}(data, data_len, method) = let
-  val @(p, r) = $P.create<int>()
+  val @(p, r) = $P.create<Int>()
   val id = $P.stash(r)
   val () = $BD.decompress_req(data, data_len, method, id)
 in p end
