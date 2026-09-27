@@ -25,9 +25,9 @@ staload BD = "wasm.bats-packages.dev/bridge/src/decompress.sats"
 
 (* out[0, len) := the blob's bytes [blob_offset, blob_offset + len) *)
 #pub fun blob_read
-  {n:nat}{o,k:nat | o + k <= n}{l:agz}{m:pos | k <= m}
+  {n:nat}{o,k:nat | o + k <= n}{l:agz}{ow:addr}{m:pos | k <= m}
   (b: !$BD.dblob(n), blob_offset: int o,
-   out: !$A.arr(byte, l, m), len: int k): void
+   out: !$A.arrx(byte, l, m, ow), len: int k): void
 
 #pub fun blob_free {n:nat} (b: $BD.dblob(n)): void
 
@@ -41,7 +41,7 @@ implement blob_claim(handle) = $BD.blob_claim(handle)
 
 implement blob_len{n}(b) = $BD.blob_len(b)
 
-implement blob_read{n}{o,k}{l}{m}(b, blob_offset, out, len) =
+implement blob_read{n}{o,k}{l}{ow}{m}(b, blob_offset, out, len) =
   $BD.blob_read(b, blob_offset, out, len)
 
 implement blob_free{n}(b) = $BD.blob_free(b)
