@@ -1,0 +1,8 @@
+[package]
+name = "never-freed"
+kind = "lib"
+
+[dependencies]
+"array" = ""
+"result" = ""
+"wasm.bats-packages.dev/decompress" = ""

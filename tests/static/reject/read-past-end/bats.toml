@@ -1,0 +1,8 @@
+[package]
+name = "read-past-end"
+kind = "lib"
+
+[dependencies]
+"array" = ""
+"result" = ""
+"wasm.bats-packages.dev/decompress" = ""
