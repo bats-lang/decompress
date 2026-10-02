@@ -9,11 +9,15 @@
 
 staload BD = "wasm.bats-packages.dev/bridge/src/decompress.sats"
 
-(* Decompresses data[0, data_len) (method 0 stored, 1 gzip, 2 deflate,
-   8 raw deflate); the promise resolves with a handle to claim *)
+(* How data is compressed (bridge's compression: Uncompressed, Gzip,
+   Deflate or DeflateRaw) *)
+#pub typedef compression = $BD.compression
+
+(* Decompresses data[0, data_len); the promise resolves with a handle to
+   claim *)
 #pub fun decompress
   {lb:agz}{n:pos}
-  (data: !$A.borrow(byte, lb, n), data_len: int n, method: int)
+  (data: !$A.borrow(byte, lb, n), data_len: int n, method: compression)
   : $P.promise(Int, $P.Pending)
 
 (* The blob a decompress promise resolved with, or none if it failed: a
