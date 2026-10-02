@@ -23,10 +23,14 @@ staload BD = "wasm.bats-packages.dev/bridge/src/decompress.sats"
   (data: !$A.borrow(byte, lb, n), data_len: int n, method: compression)
   : $P.promise(decompressed, $P.Chained)
 
-(* The blob of a handle JS passed, or none: a bridge dblob(n), n bytes
-   held by JS *)
+(* A blob JS holds, by its handle (bridge's blob_handle): only
+   bridge's atoms give one; it is not a number *)
+#pub typedef blob_handle = $BD.blob_handle
+
+(* The blob a handle names, or none: a bridge dblob(n), n bytes held by
+   JS *)
 #pub fun blob_claim
-  (handle: Int): $R.option([n:nat] $BD.dblob(n))
+  (handle: blob_handle): $R.option([n:nat] $BD.dblob(n))
 
 #pub fun blob_len {n:nat} (b: !$BD.dblob(n)): int n
 

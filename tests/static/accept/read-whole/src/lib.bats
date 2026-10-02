@@ -4,7 +4,7 @@
 #use wasm.bats-packages.dev/decompress as DC
 
 (* A claimed blob is read whole, then freed *)
-fn f (h: Int): int =
+fn f (h: $DC.blob_handle): int =
   case+ $DC.blob_claim(h) of
   | ~$R.none() => 0
   | ~$R.some(b) => let
