@@ -10,13 +10,11 @@
 Decompression bridge supporting gzip, deflate, and deflate-raw. Decompression
 runs on the host; the result is a blob handle you can read synchronously.
 
-## Constants
+## Methods
 
-| Method | Value | Description |
-|--------|-------|-------------|
-| GZIP | 0 | gzip format |
-| DEFLATE | 1 | deflate (zlib-wrapped) |
-| DEFLATE_RAW | 2 | raw deflate (no header) |
+`decompress` takes bridge's `compression`: `Uncompressed` (the bytes as
+they are), `Gzip`, `Deflate` (zlib-wrapped) or `DeflateRaw` (no
+header).
 
 ## API
 
@@ -28,7 +26,7 @@ runs on the host; the result is a blob handle you can read synchronously.
 (* Decompress data using the specified method.
    Resolves with a blob handle (integer). *)
 $DC.decompress{lb:agz}{n:nat}
-  (data: !A.borrow(byte, lb, n), data_len: int n, method: int)
+  (data: !A.borrow(byte, lb, n), data_len: int n, method: compression)
   : promise(int, Pending)
 
 (* Get the decompressed length (call after decompress resolves) *)
