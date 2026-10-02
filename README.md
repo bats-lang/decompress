@@ -24,10 +24,10 @@ header).
 #use promise as P
 
 (* Decompress data using the specified method.
-   Resolves with a blob handle (integer). *)
+   Resolves with Decompressed of a blob, or DecompressFailed. *)
 $DC.decompress{lb:agz}{n:nat}
   (data: !A.borrow(byte, lb, n), data_len: int n, method: compression)
-  : promise(int, Pending)
+  : promise(decompressed, Chained)
 
 (* Get the decompressed length (call after decompress resolves) *)
 $DC.get_len() : int
