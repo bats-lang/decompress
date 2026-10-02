@@ -13,15 +13,18 @@ staload BD = "wasm.bats-packages.dev/bridge/src/decompress.sats"
    Deflate or DeflateRaw) *)
 #pub typedef compression = $BD.compression
 
-(* Decompresses data[0, data_len); the promise resolves with a handle to
-   claim *)
+(* What decompressing gave (bridge's decompressed: Decompressed of a
+   blob, or DecompressFailed) *)
+#pub vtypedef decompressed = $BD.decompressed
+
+(* Decompresses data[0, data_len) *)
 #pub fun decompress
   {lb:agz}{n:pos}
   (data: !$A.borrow(byte, lb, n), data_len: int n, method: compression)
-  : $P.promise(Int, $P.Pending)
+  : $P.promise(decompressed, $P.Chained)
 
-(* The blob a decompress promise resolved with, or none if it failed: a
-   bridge dblob(n), n bytes held by JS *)
+(* The blob of a handle JS passed, or none: a bridge dblob(n), n bytes
+   held by JS *)
 #pub fun blob_claim
   (handle: Int): $R.option([n:nat] $BD.dblob(n))
 
@@ -35,11 +38,8 @@ staload BD = "wasm.bats-packages.dev/bridge/src/decompress.sats"
 
 #pub fun blob_free {n:nat} (b: $BD.dblob(n)): void
 
-implement decompress{lb}{n}(data, data_len, method) = let
-  val @(p, r) = $P.create<Int>()
-  val id = $P.stash(r)
-  val () = $BD.decompress_req(data, data_len, method, id)
-in p end
+implement decompress{lb}{n}(data, data_len, method) =
+  $BD.decompress(data, data_len, method)
 
 implement blob_claim(handle) = $BD.blob_claim(handle)
 
